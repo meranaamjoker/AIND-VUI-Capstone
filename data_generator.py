@@ -186,12 +186,19 @@ class AudioGenerator():
             partition (str): One of 'train', 'validation' or 'test'
         """
         audio_paths, durations, texts = [], [], []
+        duration=0
+        count=0
+        accepted=0
+        #print('Loading dataset ...'+partition+' from file ' + desc_file)
         with open(desc_file) as json_line_file:
             for line_num, json_line in enumerate(json_line_file):
                 try:
                     spec = json.loads(json_line)
+                    count=count+1
                     if float(spec['duration']) > self.max_duration:
                         continue
+                    accepted=accepted+1
+                    duration = duration + float(spec['duration'])
                     audio_paths.append(spec['key'])
                     durations.append(float(spec['duration']))
                     texts.append(spec['text'])
@@ -201,6 +208,7 @@ class AudioGenerator():
                     # json module version
                     print('Error reading line #{}: {}'
                                 .format(line_num, json_line))
+        print('Read #{}, accepted #{}, duration=#{}'.format(count, accepted, duration))
         if partition == 'train':
             self.train_audio_paths = audio_paths
             self.train_durations = durations

@@ -208,7 +208,7 @@ class AudioGenerator():
                     # json module version
                     print('Error reading line #{}: {}'
                                 .format(line_num, json_line))
-        print('Read #{}, accepted #{}, duration=#{}'.format(count, accepted, duration))
+#        print('Read #{}, accepted #{}, duration=#{}'.format(count, accepted, duration))
         if partition == 'train':
             self.train_audio_paths = audio_paths
             self.train_durations = durations

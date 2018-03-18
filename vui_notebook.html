@@ -17776,6 +17776,24 @@ FHVh1c5kAAAAAElFTkSuQmCC
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Question 1:</strong> Use the plot above to analyze the performance of each of the attempted architectures.  Which performs best?  Provide an explanation regarding why you think some models perform better than others.</p>
 <p><strong>Answer:</strong></p>
+<p><strong>model_0</strong> (SimpleRNN) It has significantly higher losses and was not converging as evident from the loss data and chart</p>
+<p><strong>model_1</strong> (RNN + TimeDistributed Dense) This performed significantly better than the first model as it had the Dense layer. I ran this for 30 epochs and it seems it would have overfitten.</p>
+<p><strong>model_2</strong> (CNN + RNN + TimeDistributed Dense) Due to the introduction of CNN, the inital feature set were better generalized and hence this model converged very fast. After running for 30 epoch, it was evident that it over-fitted as validation loss increased whereas training loss fell as low as 54</p>
+<p><strong>model_3</strong> (Deeper RNN + TimeDistributed Dense) The model did not have the CNN layer. It consistently convereged to a level and after that the loss decrease almost fall flat.</p>
+<p><strong>model_4</strong> (Bidirectional RNN + TimeDistributed Dense) Both training and validation loss were converging. Should have tried it for more epoch.</p>
+<p>For custom models, I created a common function for model buidling and changed its parameters to achive various combinations. I tried <strong>MaxPooling1D</strong> also, but the results were not awesome.</p>
+<p><strong>model_5</strong> (0 CNN, 3 RNN, 1 Dense. No dropout, No Maxpooling, No Bidirectional) This was an extension of <strong>model_3</strong> with an increased RNN layer to validate impact of RNN layers. It showed that the RNN layer improved the overall convergence. Should have tried for more epochs.</p>
+<p><strong>model</strong>6<strong> (1 CNN, 3 RNN, 2 Dense. No dropout, No Maxpooling, </strong>Bidirectional__) The model overfitted</p>
+<p><strong>model_7</strong> (1 CNN, 3 RNN, 2 Dense. No Maxpooling, <strong>Bidirectional, added dropouts CNN + RNN + Dense (0.1)</strong>) Added dropouts to prevent overfitting</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="attachment:image.png" alt="image.png"></p>
 
 </div>
 </div>
@@ -17966,7 +17984,14 @@ Epoch 20/20
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Question 2:</strong> Describe your final model architecture and your reasoning at each step.</p>
-<p><strong>Answer:</strong></p>
+<p><strong>Answer:</strong> The final model has a single layer of Conv1D (with dropout of 0.1), 3 layers of Bidirectional RNN (GRU) with dropout (0.1) and two layers of TimeDistributed Dense with a Dropout layer (0.2) between them.</p>
+<ul>
+<li>Conv1D layer better generalized the features and helped in faster convergence.</li>
+<li>Bidirectional RNN performed better.</li>
+<li>Multiple layers of RNN performed better.</li>
+<li>Multiple layers of Dense performed better.</li>
+<li>Dropouts were used to avoid overfitting in the experimental runs (<strong>model</strong>5, <strong>model_6</strong> and <strong>model_7</strong>)</li>
+</ul>
 
 </div>
 </div>

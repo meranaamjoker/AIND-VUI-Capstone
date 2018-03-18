@@ -133,27 +133,9 @@ def bidirectional_rnn_model(input_dim, units, output_dim=29):
     print(model.summary())
     return model
 
-def final_model_1():
-    """ Build a deep network for speech 
-    """
-    # Main acoustic input
-    input_data = Input(name='the_input', shape=(None, input_dim))
-    # TODO: Specify the layers in your network
-    ...
-    # TODO: Add softmax activation layer
-    y_pred = ...
-    # Specify the model
-    model = Model(inputs=input_data, outputs=y_pred)
-    # TODO: Specify model.output_length
-    model.output_length = ...
-    print(model.summary())
-    return model
-
-
-
 def final_model(input_dim, filters, kernel_size, conv_stride,
     conv_border_mode, units, output_dim=29, dropout_rate=0.5, number_of_layers=2, 
-    cell=GRU, activation='tanh'):
+    cell=GRU, activation='relu'):
     """ Build a deep network for speech 
     """
     # Main acoustic input
